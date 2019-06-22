@@ -2,33 +2,58 @@
 
 @section('title', 'Our Products')
 
-@@section('content')
-<div class="row">
+@section('content')
 
-    @foreach ($products as $product )
+<div class="container">
 
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="" alt="">
+    <div class="row">
 
-                <div class="caption">
-                    <h3>
-                        thumbnail label
-                    </h3>
-                </div>
+        @forelse($products as $product )
 
-                <div >
-                    <a style="width:30px" class="btn btn-primary" href="">
+            <div class="card" style="width:18rem; margin:1rem" >
 
-                    </a>
+                <a href="/products/{{ $product->item }}">
 
-                </div>
+                    <img class="card-img-top" style="max-height:150px; " src="storage/images/{{ $product->item }}/{{ $product->product_image }}" alt="{{ $product->id }}">
+
+                </a>
+
+                <div class="card-body">
+
+                    <div class="card-title "> {{ $product->item }}  <div class="pull-left">${{ $product->price }}</div>  </div>
+
+                        <p class="card-text"> {{ $product->description }}</p>
+
+                    </div>
+
+                    <form action="/cart" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+
+                        <input type="hidden" name="item" value="{{ $product->item }}">
+
+                        <input type="hidden" name="image" value="{{ $product->product_image }}">
+
+                        <input type="hidden" name="price" value="{{ $product->price }}">
+
+                        <input type="hidden" name="max_quantity" value="{{ $product->quantity }}">
+
+                        <button style="margin-left:5rem" class="btn btn-primary" type="submit">Add to Cart</button>
+                    </form>
             </div>
-        </div>
 
-    @endforeach
+        @empty
+
+            <h2>There are no products in the shop</h2>
+
+        @endforelse
 
     </div>
+
+</div>
+
+{{ $products->links() }}
+
 @endsection
 
 

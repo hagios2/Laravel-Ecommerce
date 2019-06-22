@@ -40,14 +40,24 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <form method="GET" action="products/{product}" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <li class="nav-item">
+                            {{-- <i class="fas fa-shopping-cart"></i>  --}}
+                            <a class="nav-link" href="/cart">Cart
+                                @if (Cart::instance('default')->count() > 0)
+                                    <span class="badge badge-pill badge-primary">{{ Cart::instance('default')->count() }}</span>
+                                @endif
+                            </a>
+                        </li>
+
+                        <form method="GET" action="/products/{{ request('item') }}" class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" name="item" value="{{ old('item') }}" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                           </form>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
+
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
@@ -79,12 +89,13 @@
 
         <main class="py-4">
             @yield('content')
-
         </main>
     </div>
-    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace( 'article-ckeditor' );
-    </script>
+
+        <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace( 'article-ckeditor' );
+        </script>
+
 </body>
 </html>

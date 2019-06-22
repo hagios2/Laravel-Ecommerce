@@ -11,12 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/products', 'ProductController');
+
+Route::resource('/cart', 'CartController');
+
+Route::post('/cart/saveForLater/{cart}', 'CartController@saveForLater');
+
+Route::post('/saveForLater', 'SaveForLaterController@store');
+
+Route::delete('/saveForLater/{id}', 'SaveForLaterController@destroy');
+
+Route::get('empty', function(){
+    Cart::instance('savedForLater')->destroy();
+});

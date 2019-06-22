@@ -29,7 +29,7 @@
 
                 <div class="form-group">
                     <label for="formGroupDescriptionInput">Description</label>
-                    <textarea class="form-control {{$errors->has('description') ? 'alert alert-danger' : ""}}" name="description" cols="30" rows="10" placeholder="description">{{old('description')}}</textarea>
+                    <textarea class="form-control {{$errors->has('description') ? 'alert alert-danger' : ""}}" name="description" {{-- id="article-ckeditor" --}} cols="30" rows="10" placeholder="description">{{old('description')}}</textarea>
                 </div>
 
                 <div class="form-group">

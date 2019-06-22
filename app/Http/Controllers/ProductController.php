@@ -15,9 +15,9 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::orderBy('created_at', 'desc')->paginate(8);
+        $products = Product::orderBy('created_at', 'desc')->paginate(6);
 
-        return view('home', compact('products'));
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -38,8 +38,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //dd('hello');
-
         $attributes = $this->formValidator();
 
         if ($request->hasFile('product_image'))
@@ -78,7 +76,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('product/show', compact('product'));
+        return $product;
+        
+        return view('products/show', compact('product'));
     }
 
     /**
@@ -113,6 +113,11 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function search()
+    {
+        $this->show(request()->validate('item'));
     }
 
 
