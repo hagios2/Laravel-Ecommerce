@@ -12,7 +12,7 @@
 
             <div class="card" style="width:18rem; margin:1rem" >
 
-                <a href="/products/{{ $product->item }}">
+                <a href="products/{{ $product->item }}">
 
                     <img class="card-img-top" style="max-height:150px; " src="storage/images/{{ $product->item }}/{{ $product->product_image }}" alt="{{ $product->id }}">
 
@@ -20,7 +20,7 @@
 
                 <div class="card-body">
 
-                    <div class="card-title "> {{ $product->item }}  <div class="pull-left">${{ $product->price }}</div>  </div>
+                    <div class="card-title "> {{ $product->item }}  <div class="pull-right" ><strong>${{ $product->price }}</strong></div>  </div>
 
                         <p class="card-text"> {{ $product->description }}</p>
 

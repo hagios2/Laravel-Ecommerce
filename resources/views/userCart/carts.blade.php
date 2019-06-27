@@ -12,8 +12,6 @@
 
             @if(Cart::instance('default')->count() > 0)
 
-                <a class="btn btn-primary" style="margin-bottom:1rem" href="/products">Continue Shopping</a>
-
                 <h2>{{ Cart::count() }} Item(s) in Cart</h2>
 
                 <table class="table" style="margin-top:1rem">
@@ -23,13 +21,19 @@
                             <th>Product Image</th>
                             <th>Product</th>
                             <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total</th>
+                            <th>Price (USD)</th>
+                            <th>Total (USD)</th>
                         </tr>
                     </thead>
 
             @endif
 
+            {{-- @if(auth()->user() && auth())
+
+            @else
+
+            @endif
+ --}}
             @forelse (Cart::instance('default')->content() as $product)
 
                 <tr>
@@ -114,6 +118,14 @@
                             </table>
 
                         </div>
+                </div><br>
+
+                <div class="row">
+
+                    <a class="btn btn-info" style="margin-bottom:1rem; margin-right:23rem " href="/products">Continue Shopping</a>
+
+                    <a class="btn btn-primary" style="margin-bottom:1rem; " href="/checkout">Proceed to checkout</a>
+
                 </div>
 
                 </div>

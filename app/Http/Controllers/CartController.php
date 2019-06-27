@@ -15,6 +15,15 @@ class CartController extends Controller
      */
     public function index()
     {
+       /* if(auth()->user() )
+        {
+            Cart::instance('default')->restore(auth()->id());
+
+            return Cart::instance('default')->content();
+        } */
+
+//        return Cart::instance('default')->content();
+
         $recommend = Product::inRandomOrder()->take(6)->get();
 
         return view('userCart.carts', compact('recommend'));
@@ -38,7 +47,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-       
+
        $duplicateInSavedForLater = Cart::instance('savedForLater')->search(function ($cartItem, $rowId) use ($request){
             return $cartItem->id === $request->id;
         });
@@ -50,11 +59,16 @@ class CartController extends Controller
                 Cart::instance('default')->add($request->id, $request->item, 1, $request->price, ['image' => $request->image, 'max_qty' => $request->max_quantity])
                     ->associate('App\Product');
 
+                if(auth()->user())
+                {
+                    Cart::instance('default')->store(auth()->id());
+                }
+
                 return redirect('/cart')->with('success', 'Item added to cart');
             }else {
                 return redirect('/cart')->with('info', 'Item has reached maximum quantity in stock');
             }
-            
+
         }else {
             return redirect('/cart')->with('info', 'Item already saved to cart, Check items in Saved for later');
         }
@@ -68,7 +82,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        $recommended = Product::where('id' !== $id)->inRandomOrder()->take(5)->get();
+        $recommended = Product::where('id' !== $id)->inRandomOrder()->take(3)->get();
 
         return view('show', compact('recommended'));
     }
@@ -93,7 +107,7 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-      
+
         $rowId = $request->rowId;
 
         $item = Cart::instance('default')->get($rowId);
@@ -106,7 +120,7 @@ class CartController extends Controller
         }else {
             Cart::instance('default')->update($rowId, $item->max_quantity);
         }
-           
+
         return redirect('/cart');
     }
 
@@ -137,6 +151,13 @@ class CartController extends Controller
         Cart::instance('savedForLater')->add($item->id, $item->name, $item->qty, $item->price, ['image' => $item->options->image, 'max_qty' => $item->options->max_qty])
                 ->associate('App\Product');
 
+        if(!auth()->guest())
+        {
+
+            Cart::instance('savedForLater')->store(auth()->id());
+
+        }
+
         //return Cart::instance('savedForLater')->content();
 
         return redirect('/cart')->with('success', 'Item has been saved for later');
@@ -149,9 +170,9 @@ class CartController extends Controller
         });
 
         if ($duplicateInCart->isNotEmpty()) {
-            
-            if ($duplicateInCart->qty < $duplicateInCart->options->max_qty) {
-                
+
+            if ($duplicateInCart->content()->qty < $duplicateInCart->content()->options->max_qty) {
+
                 return true;
 
             }else{

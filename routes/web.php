@@ -17,7 +17,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/products', 'ProductController');
 
+/* Route::get('/products/{product}', 'ProductController@show'); */
+
 Route::resource('/cart', 'CartController');
+
+Route::resource('/checkout', 'checkOutController');
 
 Route::post('/cart/saveForLater/{cart}', 'CartController@saveForLater');
 
