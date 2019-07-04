@@ -174,8 +174,6 @@
 
                                     <td>{{ $savedForLater->price }}</td>
 
-                                    <td>{{ $savedForLater->total }}</td>
-
                                     <td>
                                         <div style="padding:0.5rem">
                                             <form action="/saveForLater" method="post">

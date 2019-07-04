@@ -13,11 +13,9 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/products', 'HomeController@index')->name('home');
 
 Route::resource('/products', 'ProductController');
-
-/* Route::get('/products/{product}', 'ProductController@show'); */
 
 Route::resource('/cart', 'CartController');
 
@@ -29,6 +27,8 @@ Route::post('/saveForLater', 'SaveForLaterController@store');
 
 Route::delete('/saveForLater/{id}', 'SaveForLaterController@destroy');
 
+Route::get('/thanks', 'ConfirmationController@index');
+
 Route::get('empty', function(){
-    Cart::instance('savedForLater')->destroy();
+    Cart::instance('default')->destroy();
 });

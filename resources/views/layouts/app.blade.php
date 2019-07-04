@@ -9,13 +9,9 @@
 
     <title> @yield('title', 'Thecommerce')</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -45,7 +41,11 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            {{-- <i class="fas fa-shopping-cart"></i>  --}}
+                            <a class="nav-link" href="/products">Shop</a>
+                        </li>
+
+                        <li class="nav-item">
+                             {{-- <i> class="fa fa-shopping-cart"></i> --}}
                             <a class="nav-link" href="/cart">Cart
                                 @if (Cart::instance('default')->count() > 0)
                                     <span class="badge badge-pill badge-primary">{{ Cart::instance('default')->count() }}</span>
@@ -96,11 +96,10 @@
         </main>
     </div>
 
-        <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-        <script>
-            CKEDITOR.replace( 'article-ckeditor' );
-        </script>
 
+
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" ></script>
         @yield('stripe_js')
 
 </body>
